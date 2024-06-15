@@ -1,6 +1,6 @@
 Advantis Dental Surgeries, LLC (ADS) is a company that is in the business of managing a
 growing network of dental surgeries which are located across cities in the South West region.
-Assume you have been hired by the company, as a Lead Software Engineer and tasked to lead
+You have been hired by the company, as a Lead Software Engineer and tasked to lead
 the effort in designing and developing a web-based software solution (i.e. a website) that the
 company will be using to manage their business.
 The system will be used by an Office Manager to register Dentists who apply to join their
