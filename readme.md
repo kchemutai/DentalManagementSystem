@@ -25,6 +25,26 @@ A dentist cannot be given more than 5 appointments in any given week. The system
 prevent a Patient from requesting a new appointment if they have an outstanding, unpaid
 bill for dental service they have received.
 
+
+
+Requirements Analysis
+
+
+Office Manager registers new dentists.
+Office Manager enrolls new patients.
+Office Manager books appointments for patients.
+Office Manager sends confirmation emails for booked appointments.
+Office Manager prevents appointment requests for patients with outstanding unpaid bills.
+Dentist signs in to view their appointment schedule.
+Dentist accesses details of scheduled patients.
+Dentist manages a maximum of 5 appointments per week.
+Patient registers and signs in to the system.
+Patient views their appointments.
+Patient requests, cancels, or changes appointments.
+Patient submits online forms to request appointments.
+
+
+
 ER Diagram
 
 ![img.png](img.png)
