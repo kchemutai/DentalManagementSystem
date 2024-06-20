@@ -21,14 +21,7 @@ public class AddressServiceImpl implements AddressService {
 	
 	@Override
 	public Integer createNewAddress(Address address) {
-		log.info("A new Address with id=" + address.getId() + " will be created!");
-	
 		addressRepository.save(address);
-		
-		//BeanUtils.copyProperties(sourceObject, targetObject);
-		
-		log.info("The Address with id=" + address.getId() + " is created!");
-		
 		return address.getId();
 	}
 

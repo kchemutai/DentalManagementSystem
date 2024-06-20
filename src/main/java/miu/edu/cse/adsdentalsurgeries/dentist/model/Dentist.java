@@ -27,5 +27,5 @@ public class Dentist extends User {
 	private String specialization;
 	
 	@OneToMany(mappedBy = "dentist")
-	private List<Appointment>appointments;
+	private List<Appointment> appointments;
 }

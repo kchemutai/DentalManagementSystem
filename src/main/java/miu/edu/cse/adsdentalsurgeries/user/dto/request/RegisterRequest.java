@@ -23,7 +23,6 @@ public class RegisterRequest {
     private String email;
 
     @NotNull(message = "Password cannot be null")
-//    @Size(min = 6, max = 100, message = "Password should be at least 6 characters")
     private String password;
 
     @NotNull(message = "Role cannot be null or empty")
