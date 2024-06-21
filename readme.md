@@ -48,3 +48,9 @@ Requirements Analysis
 ER Diagram
 
 ![img.png](img.png)
+
+
+
+
+Architecture
+![ApplicationArchitecture.png](ApplicationArchitecture.png)
