@@ -1,5 +1,6 @@
 package miu.edu.cse.adsdentalsurgeries.dentist.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -23,9 +24,19 @@ public class Dentist extends User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	@Column(nullable = true)
 	private String specialization;
 	
 	@OneToMany(mappedBy = "dentist")
 	private List<Appointment> appointments;
+
+	public Dentist(String specialization) {
+		this.specialization = specialization;
+		this.appointments = new ArrayList<>();
+	}
+
+	public void addAppointment(Appointment appointment) {
+		this.appointments.add(appointment);
+	}
 }

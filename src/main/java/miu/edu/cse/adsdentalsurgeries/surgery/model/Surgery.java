@@ -1,5 +1,6 @@
 package miu.edu.cse.adsdentalsurgeries.surgery.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -25,14 +26,24 @@ public class Surgery {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	@Column(name = "Surgery_Name")
 	private String surgeryName;
+
 	@Column(name = "Phone_Number")
 	private String phoneNumber;
 	
 	@OneToOne
 	private Address address;
 	
-	@OneToMany(mappedBy = "surgery", cascade = CascadeType.ALL)
-	private List<Appointment> appointments;
+	@OneToOne(mappedBy = "surgery", cascade = CascadeType.ALL)
+	private Appointment appointment;
+
+	public Surgery(String surgeryName, String phoneNumber, Address address, Appointment appointment) {
+		this.surgeryName = surgeryName;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.appointment = appointment;
+	}
+
 }

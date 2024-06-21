@@ -1,6 +1,7 @@
 package miu.edu.cse.adsdentalsurgeries.patient.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -27,14 +28,23 @@ public class Patient extends User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "date_of_birth", nullable = true)
+
+	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth;
-	@Column(name = "outstanding_bill", nullable = true)
+
+	@Column(name = "outstanding_bill")
 	private double outstandingBill;
 	
 	@OneToOne
-	private Address address;
+	private Address mailingAddress;
 	
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
 	private List<Appointment> appointments;
+
+	public Patient(LocalDate dateOfBirth, double outstandingBill, Address mailingAddress) {
+		this.dateOfBirth = dateOfBirth;
+		this.outstandingBill = outstandingBill;
+		this.mailingAddress = mailingAddress;
+		this.appointments = new ArrayList<>();
+	}
 }

@@ -8,6 +8,5 @@ import java.util.List;
 public interface AddressService {
 
 	Integer createNewAddress(Address address);
-	
 	List<Address> findAddresses();
 }

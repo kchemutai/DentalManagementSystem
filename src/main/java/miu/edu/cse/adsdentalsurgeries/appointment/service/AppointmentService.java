@@ -7,8 +7,7 @@ import java.util.List;
 
 
 public interface AppointmentService {
+	Integer bookAppointment(Appointment appointment);
 
-	Integer createNewAppointment(Appointment appointment);
-	
 	List<Appointment> findAppointment();
 }

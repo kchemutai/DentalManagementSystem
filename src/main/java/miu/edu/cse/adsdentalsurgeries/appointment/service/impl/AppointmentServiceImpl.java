@@ -6,6 +6,7 @@ import java.util.List;
 import miu.edu.cse.adsdentalsurgeries.appointment.model.Appointment;
 import miu.edu.cse.adsdentalsurgeries.appointment.repository.AppointmentRepository;
 import miu.edu.cse.adsdentalsurgeries.appointment.service.AppointmentService;
+import miu.edu.cse.adsdentalsurgeries.notification.EmailSender;
 import org.springframework.stereotype.Service;
 
 
@@ -18,9 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 public class AppointmentServiceImpl implements AppointmentService {
 	
 	private final AppointmentRepository appointmentRepository;
+	private final EmailSender emailSender;
 	
 	@Override
-	public Integer createNewAppointment(Appointment appointment) {
+	public Integer bookAppointment(Appointment appointment) {
 	log.info("A new Appointment with id=" + appointment.getId() + " will be created!");
 	
 	appointmentRepository.save(appointment);

@@ -51,6 +51,11 @@ ER Diagram
 
 
 
+Refined Class Diagram
+![classDiagram.png](classDiagram.png)
+
+
+
 
 Architecture
 ![ApplicationArchitecture.png](ApplicationArchitecture.png)
