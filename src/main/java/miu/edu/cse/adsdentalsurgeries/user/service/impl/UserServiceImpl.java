@@ -44,7 +44,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserResponseDto> addUser(UserRequestDto request) {
         User user = userAdapter.convertRegisterRequestToUser(request);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         User savedUser = userRepository.save(user);
         return Optional.of(userAdapter.convertUserToUserResponseDto(savedUser));
     }
