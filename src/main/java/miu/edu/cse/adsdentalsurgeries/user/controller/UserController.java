@@ -2,11 +2,10 @@ package miu.edu.cse.adsdentalsurgeries.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import miu.edu.cse.adsdentalsurgeries.user.dto.request.RegisterRequest;
+import miu.edu.cse.adsdentalsurgeries.user.dto.request.UserRequestDto;
 import miu.edu.cse.adsdentalsurgeries.user.dto.response.UserResponseDto;
 import miu.edu.cse.adsdentalsurgeries.user.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -28,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/auth/register")
-    public ResponseEntity<UserResponseDto> registerUser( @Valid @RequestBody RegisterRequest registerRequest){
-        return ResponseEntity.ok(userService.addUser(registerRequest).get());
+    public ResponseEntity<UserResponseDto> registerUser( @Valid @RequestBody UserRequestDto userRequestDto){
+        return ResponseEntity.ok(userService.addUser(userRequestDto).get());
     }
 }

@@ -1,15 +1,18 @@
 package miu.edu.cse.adsdentalsurgeries.patient.service;
 
 
-import miu.edu.cse.adsdentalsurgeries.patient.model.Patient;
+import miu.edu.cse.adsdentalsurgeries.patient.dto.request.PatientRequestDto;
+import miu.edu.cse.adsdentalsurgeries.patient.dto.response.PatientResponseDto;
+
+import java.util.Optional;
 
 public interface PatientService {
 
-	Integer createNewPatient(Patient patient);
+	Optional<PatientResponseDto> addNewPatient(PatientRequestDto patientRequestDto);
 	
-	Patient findPatientById(Integer patientId);
+	Optional<PatientResponseDto> findPatientById(Integer patientId);
 	
-	Patient updateExistingPatient(Patient patient);
+	Optional<PatientResponseDto> updateExistingPatient(PatientRequestDto patientRequestDto);
 	
-	Integer deletePatient(Integer patientId);
+	void deletePatient(Integer patientId);
 }

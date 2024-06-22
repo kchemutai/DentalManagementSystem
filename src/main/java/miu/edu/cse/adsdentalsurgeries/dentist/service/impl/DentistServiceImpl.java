@@ -1,68 +1,69 @@
 package miu.edu.cse.adsdentalsurgeries.dentist.service.impl;
 
 
+import miu.edu.cse.adsdentalsurgeries.dentist.adapter.DentistAdapter;
+import miu.edu.cse.adsdentalsurgeries.dentist.dto.request.DentistRequestDto;
+import miu.edu.cse.adsdentalsurgeries.dentist.dto.response.DentistResponseDto;
 import miu.edu.cse.adsdentalsurgeries.dentist.model.Dentist;
 import miu.edu.cse.adsdentalsurgeries.dentist.service.DentistService;
 import miu.edu.cse.adsdentalsurgeries.dentist.repository.DentistRepository;
+import miu.edu.cse.adsdentalsurgeries.user.adaptor.UserAdapter;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class DentistServiceImpl implements DentistService {
 
 	private final DentistRepository dentistRepository;
-	
-	//CRUD
-	public Integer createNewDentist(Dentist dentist) {
-		log.info("A new Dentist with id=" + dentist.getId() + " will be created!");
-		
-		dentistRepository.save(dentist);
-		
-		log.info("The Dentist with id=" + dentist.getId() + " is created!");
-		
-		return dentist.getId();
+	private final DentistAdapter dentistAdapter;
+	private final UserAdapter userAdapter;
+
+	@Override
+	public Optional<DentistResponseDto> createNewDentist(DentistRequestDto dentistRequestDto) {
+		Dentist dentist = Dentist.builder()
+				.specialization(dentistRequestDto.getSpecialization())
+				.user(userAdapter.convertRegisterRequestToUser(dentistRequestDto.getUserRequestDto()))
+				.build();
+		Dentist createdDentist = dentistRepository.save(dentist);
+		DentistResponseDto dentistResponseDto = DentistResponseDto.builder()
+				.specialization(createdDentist.getSpecialization())
+				.userResponseDto(userAdapter.convertUserToUserResponseDto(createdDentist.getUser()))
+				.build();
+		return Optional.of(dentistResponseDto);
 	}
-	
-	public Dentist findDentistById(Integer dentistId) {
-		Dentist dentist = dentistRepository.findById(dentistId).
-				orElseThrow(() -> new NullPointerException(
-						"Dentist with id=" + dentistId + " doesn't exist in the database!"));
-		return dentist;
-	}
-	
-	public Dentist updateExistingDentist(Dentist dentist) {
-		Dentist exisDentist = findDentistById(dentist.getId());
-		
-		if(exisDentist != null) {
-			log.info("Dentists with id=" + exisDentist.getId() + "is exist in the DB!");
-			
-			exisDentist.setAppointments(dentist.getAppointments());
-			exisDentist.setEmail(dentist.getEmail());
-			exisDentist.setFirstName(dentist.getFirstName());
-			exisDentist.setLastName(dentist.getLastName());
-			exisDentist.setPhoneNumber(dentist.getPhoneNumber());
-			exisDentist.setSpecialization(dentist.getSpecialization());
-			
-			dentistRepository.save(exisDentist);
-			
-			log.info("Dentist with id=" + exisDentist.getId() + "successfully updated!");
+
+	@Override
+	public Optional<DentistResponseDto> findDentistById(Integer dentistId) {
+		Optional<Dentist> dentist = dentistRepository.findById(dentistId);
+		if (dentist.isPresent()) {
+			return Optional.of(dentistAdapter.dentistToDentistResponseDto(dentist.get()));
 		}
-		return exisDentist;
+		return Optional.empty();
 	}
-	
-	public Integer deleteDentist(Integer dentistId) {
-		Dentist dentist = findDentistById(dentistId);
-		
-		if(dentist != null) {
-			log.info("Role with id=" + dentist.getId() + "is exist in the DB!");
-			dentistRepository.delete(dentist);
-			log.info("Dentist with id=" + dentist.getId() + "is exist in the DB!");
+
+	@Override
+	public Optional<DentistResponseDto> updateExistingDentist(int dentistId, DentistRequestDto dentistRequestDto) {
+		Optional<Dentist> existingDentist = dentistRepository.findById(dentistId);
+		if (existingDentist.isPresent()) {
+			Dentist dentist = existingDentist.get();
+			dentist.setSpecialization(dentistRequestDto.getSpecialization());
+			dentist.setUser(userAdapter.convertRegisterRequestToUser(dentistRequestDto.getUserRequestDto()));
+			Dentist updatedDentist = dentistRepository.save(dentist);
+			DentistResponseDto dentistResponseDto = dentistAdapter.dentistToDentistResponseDto(updatedDentist);
+			return Optional.of(dentistResponseDto);
 		}
-		return dentist.getId();
+		return Optional.empty();
+	}
+
+	@Override
+	public void deleteDentist(Integer dentistId) {
+		dentistRepository.deleteById(dentistId);
 	}
 }

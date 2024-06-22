@@ -3,13 +3,11 @@ package miu.edu.cse.adsdentalsurgeries.dentist.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import miu.edu.cse.adsdentalsurgeries.appointment.model.Appointment;
@@ -19,22 +17,30 @@ import miu.edu.cse.adsdentalsurgeries.user.model.User;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Dentist extends User {
+@Builder
+public class Dentist {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(nullable = true)
+	@NotEmpty(message = "Specialisation cannot be null or empty")
+	@Column(nullable = false)
 	private String specialization;
+
+	@NotNull(message = "User details cannot be null")
+	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private User user;
 	
 	@OneToMany(mappedBy = "dentist")
 	private List<Appointment> appointments;
 
-	public Dentist(String specialization) {
+	public Dentist(String specialization, User user) {
 		this.specialization = specialization;
+		this.user = user;
 		this.appointments = new ArrayList<>();
 	}
+
 
 	public void addAppointment(Appointment appointment) {
 		this.appointments.add(appointment);

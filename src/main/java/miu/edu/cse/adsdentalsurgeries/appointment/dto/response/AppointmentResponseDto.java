@@ -5,9 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import miu.edu.cse.adsdentalsurgeries.address.dto.response.AddressResponseDto;
 import miu.edu.cse.adsdentalsurgeries.address.model.Address;
 import miu.edu.cse.adsdentalsurgeries.appointment.model.Status;
+import miu.edu.cse.adsdentalsurgeries.dentist.dto.response.DentistResponseDto;
+import miu.edu.cse.adsdentalsurgeries.patient.dto.response.PatientResponseDto;
 import miu.edu.cse.adsdentalsurgeries.patient.model.Patient;
+import miu.edu.cse.adsdentalsurgeries.surgery.dto.response.SurgeryResponseDto;
 import miu.edu.cse.adsdentalsurgeries.surgery.model.Surgery;
 
 @Data
@@ -19,14 +23,14 @@ public class AppointmentResponseDto {
     private Status status;
 
     @NotNull(message = "Surgery cannot be null")
-    private Surgery surgery;
+    private SurgeryResponseDto surgeryResponseDto;
 
     @NotNull(message = "Patient cannot be null")
-    private Patient patient;
+    private PatientResponseDto patientResponseDto;
 
     @NotNull(message = "Dentist cannot be null")
-    private Patient dentist;
+    private DentistResponseDto dentistResponseDto;
 
     @NotNull(message = "Location cannot be null")
-    private Address location;
+    private AddressResponseDto addressResponseDto;
 }

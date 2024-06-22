@@ -2,7 +2,8 @@ package miu.edu.cse.adsdentalsurgeries.user.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import miu.edu.cse.adsdentalsurgeries.user.adaptor.UserAdapter;
-import miu.edu.cse.adsdentalsurgeries.user.dto.request.RegisterRequest;
+import miu.edu.cse.adsdentalsurgeries.user.dto.request.UserRequestDto;
+import miu.edu.cse.adsdentalsurgeries.user.dto.response.UserResponse;
 import miu.edu.cse.adsdentalsurgeries.user.dto.response.UserResponseDto;
 import miu.edu.cse.adsdentalsurgeries.user.model.User;
 import miu.edu.cse.adsdentalsurgeries.user.repository.UserRepository;
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserResponseDto> addUser(RegisterRequest request) {
+    public Optional<UserResponseDto> addUser(UserRequestDto request) {
         User user = userAdapter.convertRegisterRequestToUser(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserResponseDto> updateUser(RegisterRequest request) {
+    public Optional<UserResponseDto> updateUser(UserRequestDto request) {
         Optional<User> savedUser = userRepository.findByEmail(request.getEmail());
         if (savedUser.isPresent()) {
             User foundUser = savedUser.get();
@@ -71,6 +72,15 @@ public class UserServiceImpl implements UserService {
             User foundUser = user.get();
             userRepository.delete(foundUser);
             return Optional.of(userAdapter.convertUserToUserResponseDto(foundUser));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<UserResponse> findById(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User foundUser = optionalUser.get();
+            return Optional.of(userAdapter.convertUserToUserResponse(foundUser));
         }
         return Optional.empty();
     }

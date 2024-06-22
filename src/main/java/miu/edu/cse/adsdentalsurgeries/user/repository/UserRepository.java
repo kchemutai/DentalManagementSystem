@@ -1,6 +1,5 @@
 package miu.edu.cse.adsdentalsurgeries.user.repository;
 
-import miu.edu.cse.adsdentalsurgeries.user.dto.response.UserResponseDto;
 import miu.edu.cse.adsdentalsurgeries.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

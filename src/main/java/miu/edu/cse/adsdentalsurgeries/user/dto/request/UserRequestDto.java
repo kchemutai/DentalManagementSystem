@@ -9,7 +9,7 @@ import miu.edu.cse.adsdentalsurgeries.user.model.Role;
 
 @AllArgsConstructor
 @Data
-public class RegisterRequest {
+public class UserRequestDto {
     @NotEmpty(message = "First name cannot be empty")
     private String firstName;
 

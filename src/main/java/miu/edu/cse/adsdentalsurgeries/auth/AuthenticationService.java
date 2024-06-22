@@ -27,9 +27,9 @@ public class AuthenticationService {
                         ()->new UserNotFoundException("User with email "+authenticationRequest.getEmail()+" not found")
                 );
         // Verify the password
-        if (!passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Invalid password");
-        }
+//        if (!passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword())) {
+//            throw new BadCredentialsException("Invalid password");
+//        }
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
         );

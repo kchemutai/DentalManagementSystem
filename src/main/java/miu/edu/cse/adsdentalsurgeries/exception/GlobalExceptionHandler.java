@@ -1,6 +1,9 @@
 package miu.edu.cse.adsdentalsurgeries.exception;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import miu.edu.cse.adsdentalsurgeries.exception.dentist.DentistNotFoundException;
+import miu.edu.cse.adsdentalsurgeries.exception.patient.PatientNotFoundException;
+import miu.edu.cse.adsdentalsurgeries.exception.surgery.SurgeryNotFoundException;
 import miu.edu.cse.adsdentalsurgeries.exception.user.UserNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,24 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleCustomerNotFoundException(UserNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(DentistNotFoundException.class)
+    public ResponseEntity<String> handleDentistNotFoundException(DentistNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(PatientNotFoundException.class)
+    public ResponseEntity<String> handlePatientNotFoundException(PatientNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(SurgeryNotFoundException.class)
+    public ResponseEntity<String> handleSurgeryNotFoundException(SurgeryNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
@@ -53,17 +74,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(ServerErrorException.class)
-    public ResponseEntity<String> handleServerErrorException(ServerErrorException e) {
-        return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleAllOtherExceptions(Exception e) {
-        return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(ServerErrorException.class)
+//    public ResponseEntity<String> handleServerErrorException(ServerErrorException e) {
+//        return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> handleAllOtherExceptions(Exception e) {
+//        return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<String> handleJwtTokenExpiredException(ExpiredJwtException e) {
